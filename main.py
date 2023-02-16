@@ -1,17 +1,23 @@
-import sympy as sym
+import sympy as sym #Calculo simbolico
 from sympy import *
 import numpy as np
 import matplotlib.pyplot as plt
-x = symbols('x')
-np.set_printoptions(precision = 4)
 
+
+x = symbols('x') # La variable simbolica para realizar los caálculos correspondientes
+#m: Coordenadas en x
+#z: Coordenadas en y
 def ddn(m, z):
+    #Obtencion de diferencias divididas
+    #Se crea una matriz para añadir los vectores de x y de y
     a = []
     for g in range(len(m)+1):
         aux = []
         for e in range(len(m)):
             aux.append(0)
         a.append(aux)
+
+
     for s in range(len(m)):
         a[0][s] = (m[s])
         a[1][s] = (z[s])
@@ -20,7 +26,7 @@ def ddn(m, z):
         d = 1
     for i in range(len(a[0])):
         for j in range(len(a[0])-b):
-            a[c+1][j] = ((a[c][j+1]-a[c][j])/(a[0][j+d]-a[0][j]))
+            a[c+1][j] = ((a[c][j+1]-a[c][j])/(a[0][j+d]-a[0][j])) #Formula de las diferencias divididas, los resultados que se guardaran en la matriz
         b+= 1
         c+= 1
         d+= 1
@@ -58,15 +64,15 @@ def ddn(m, z):
     #Prueba 2
 #m=[1,3,5,6]
 #z=[0.6666666667,1,-1,0]
+
 m=[1,3,4,8]
 z=[2,3,2,10]
 
-px = sym.lambdify(x,ddn(m,z))
-pxi=np.linspace(-100,100,1000)
+px = sym.lambdify(x,ddn(m,z)) #Transforma la expresion en una funcion lambda
+pxi=np.linspace(-10,10,100)
 pfi = px(pxi)
+np.set_printoptions(precision = 4)
 plt.plot(m,z,'o', label = 'Puntos')
-##for i in range(0,n,1):
-##    plt.axvline(xi[i],ls='--', color='yellow')
 plt.plot(pxi,pfi, label = 'Polinomio')
 plt.legend()
 plt.xlabel('xi')
@@ -75,21 +81,5 @@ plt.title('Diferencias Divididas - Newton')
 plt.show()
 
 
-#Grafica de polinomio °°
-#polinomio =[]
-#polinomio = ddn(m,z)
-#print("polinomio: ", polinomio)
-#crea un arreglo de valores para el eje x
-#y=np.linspace(-5,5,100)
-#d=np.linspace(-5,5,100)
-#evalua el polinomio en cada valor de x
-#y= np.polyval(ddn(m,z), d)
 
-#ddn(m,z)
-#Grafica el polinomio
-#plt.plot(d,ddn(m,z))
-#plt.plot("Diferencias divididas y Polinomio de Newton")
-#plt.xlabel("x")
-#plt.ylabel("y")
-#plt.show()
 
